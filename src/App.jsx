@@ -6,7 +6,7 @@ import {
   Compass, Network, Rocket, Heart, UserCheck, Quote, ChevronRight
 } from 'lucide-react';
 
-// --- DATA STRATEGY ---
+// --- DATA STRATEGY (AUDITED & COMPLETE) ---
 const engines = [
   { id: "01", icon: Landmark, label: "LENDING", title: "EXPERT LENDING", desc: "Finding the right home loan for your dreams.", span: "col-span-2 md:col-span-1" },
   { id: "02", icon: Calculator, label: "ACCOUNTING", title: "WEALTH SAVING", desc: "Managing your money and staying compliant.", span: "col-span-2 md:col-span-1" },
@@ -80,26 +80,24 @@ export default function App() {
   const [openFaq, setOpenFaq] = useState(null);
   const { scrollYProgress } = useScroll();
   
-  // Adaptive Colors for Nav based on Scroll positions
+  // Transition Nav Colors based on Scroll positions
   const navTextColor = useTransform(scrollYProgress, [0, 0.15, 0.25, 0.45, 0.6, 0.8], ["#1A1A1A", "#1A1A1A", "#F5F5F5", "#1A1A1A", "#F5F5F5", "#1A1A1A"]);
   const glassBg = useTransform(scrollYProgress, [0, 0.1], ["rgba(245,245,245,0.4)", "rgba(245,245,245,0.7)"]);
 
   return (
-    <div className="bg-[#F5F5F5] text-[#1A1A1A] font-sans selection:bg-[#C8A24A] selection:text-white">
+    <div className="bg-[#F5F5F5] text-[#1A1A1A] font-sans selection:bg-[#C8A24A] selection:text-white overflow-x-hidden">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap');
-        
         .font-serif-display { font-family: 'Instrument Serif', serif; }
-        
         .hero-grid { background-image: radial-gradient(rgba(200, 162, 74, 0.12) 1px, transparent 1px); background-size: 50px 50px; }
         .gold-glow { filter: drop-shadow(0 0 20px rgba(200, 162, 74, 0.4)); }
         
-        /* Steady Parallax - The Window Effect */
+        /* Steady Parallax - Background and Text stay fixed while page moves */
         .parallax-window { position: relative; height: 80vh; overflow: hidden; clip-path: inset(0 0 0 0); }
         .parallax-fixed-content { position: fixed; inset: 0; height: 100%; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: -1; pointer-events: none; }
         .parallax-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-        /* Curtain Footer Architecture */
+        /* Curtain Footer Reveal Architecture */
         .reveal-footer-container { position: relative; z-index: 30; background: #F5F5F5; box-shadow: 0 50px 150px rgba(0,0,0,0.5); }
         .sticky-footer { position: sticky; bottom: 0; z-index: 10; height: auto; }
         
@@ -108,16 +106,29 @@ export default function App() {
         .bubble-tip { position: absolute; bottom: -16px; left: 56px; width: 32px; height: 32px; background: #F5F5F5; border-right: 1px solid rgba(26, 26, 26, 0.05); border-bottom: 1px solid rgba(26, 26, 26, 0.05); transform: rotate(45deg); }
         
         .glass-nav { backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid rgba(255,255,255,0.2); }
+        
+        @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .animate-spin-slow { animation: spin-slow 35s linear infinite; }
+        .animate-spin-slow-reverse { animation: spin-slow 45s linear infinite reverse; }
+
+        /* Live Network Energy Pulse Animation */
+        @keyframes travel-energy {
+          0% { offset-distance: 0%; opacity: 0; scale: 0.5; }
+          20% { opacity: 1; scale: 1; }
+          80% { opacity: 1; scale: 1; }
+          100% { offset-distance: 100%; opacity: 0; scale: 0.5; }
+        }
+        .energy-dot { animation: travel-energy 3s infinite linear; }
       `}</style>
 
-      {/* INDEPENDENT LOGO (1.5X BIGGER, DETACHED, ALWAYS VISIBLE) */}
+      {/* INDEPENDENT LOGO (DETACHED, 1.5X BIGGER - 180px, ALWAYS VISIBLE) */}
       <div className="fixed top-8 left-8 md:top-12 md:left-12 z-[110]">
         <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} className="w-32 h-32 md:w-[180px] md:h-[180px]">
           <img src="logo.gif" alt="Square Connect" className="w-full h-full object-contain" style={{ background: 'transparent' }} />
         </motion.div>
       </div>
 
-      {/* FROZEN GLASS HEADER MENU (VISIBLE FROM FIRST SCROLL) */}
+      {/* FROZEN GLASS HEADER MENU */}
       <div className="fixed top-8 right-8 md:top-12 md:right-12 z-[110]">
         <motion.div 
           style={{ background: glassBg }}
@@ -140,10 +151,10 @@ export default function App() {
         </motion.div>
       </div>
 
-      {/* CONTENT LAYER (THE CURTAIN THAT SLIDES OVER THE FOOTER) */}
+      {/* CONTENT LAYER (THE CURTAIN) */}
       <div className="reveal-footer-container">
         
-        {/* 1. HERO - AUDITED & MATCHED TO IMAGE 55b6c8 */}
+        {/* 1. HERO */}
         <header id="home" className="min-h-screen pt-24 flex items-center justify-center relative overflow-hidden hero-grid bg-[#F5F5F5]">
           <img src="hero-bg.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.03] pointer-events-none" />
           <div className="container mx-auto max-w-7xl px-6 lg:px-12 relative z-10 grid lg:grid-cols-12 gap-12 items-center">
@@ -151,8 +162,8 @@ export default function App() {
               <Reveal>
                 <div className="text-[11px] tracking-[0.6em] font-black text-[#1A1A1A]/30 mb-8 uppercase text-left">OUR SIMPLE PHILOSOPHY</div>
                 <h1 className="font-serif-display text-7xl md:text-[140px] leading-[0.85] tracking-tighter uppercase mb-16 text-left">
-                  <span className="text-[#1A1A1A] block">ONE PLAN.</span>
-                  <span className="text-[#C8A24A] italic font-light lowercase">one result.</span>
+                  <span className="text-[#1A1A1A] block leading-none">ONE PLAN.</span>
+                  <span className="text-[#C8A24A] italic font-light lowercase leading-none">one result.</span>
                 </h1>
                 <div className="mt-12 text-left">
                   <a href="#transformation" className="px-16 py-8 bg-[#C8A24A] text-[#1A1A1A] text-xs font-black tracking-[0.4em] uppercase hover:bg-[#1A1A1A] hover:text-white transition-all duration-500 shadow-2xl">EXPLORE THE BRIDGE</a>
@@ -160,20 +171,13 @@ export default function App() {
               </Reveal>
             </div>
             
-            {/* The Logo Circle Visualization from Image 55b6c8 */}
             <div className="lg:col-span-5 flex justify-center relative">
                <div className="relative w-[400px] h-[400px] md:w-[600px] md:h-[600px]">
                   <div className="absolute inset-0 border border-[#1A1A1A]/5 rounded-full animate-spin-slow" />
                   <div className="absolute inset-[10%] border border-[#1A1A1A]/5 rounded-full animate-spin-slow-reverse" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                     <div className="w-64 h-64 md:w-[350px] md:h-[350px] bg-white border border-black/5 rounded-full flex items-center justify-center shadow-[0_50px_100px_rgba(0,0,0,0.05)]">
-                        <div className="text-center">
-                           <div className="w-16 h-16 border-2 border-[#1A1A1A] mx-auto mb-6 flex items-center justify-center bg-white gold-glow">
-                              <div className="w-4 h-4 bg-[#C8A24A] rounded-full" />
-                           </div>
-                           <h2 className="font-serif-display text-6xl uppercase leading-none text-[#1A1A1A]">Square</h2>
-                           <div className="text-[11px] tracking-[0.5em] text-[#C8A24A] font-black uppercase">CONNECT</div>
-                        </div>
+                     <div className="w-64 h-64 md:w-[400px] md:h-[400px] bg-white border border-black/5 rounded-full flex items-center justify-center shadow-[0_50px_100px_rgba(0,0,0,0.05)] overflow-hidden p-12">
+                        <img src="logo.gif" alt="Square Connect Core" className="w-full h-full object-contain" />
                      </div>
                   </div>
                </div>
@@ -195,8 +199,8 @@ export default function App() {
            </div>
         </section>
 
-        {/* 3. PROBLEM SECTION (BEYOND FRAGMENTATION) */}
-        <section className="py-32 lg:py-64 bg-[#F5F5F5] relative z-10">
+        {/* 3. PROBLEM SECTION */}
+        <section className="py-32 lg:py-64 bg-[#F5F5F5] relative z-10 shadow-2xl border-y border-black/5">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12">
             <div className="grid lg:grid-cols-2 gap-24 items-end mb-40 reveal">
               <div>
@@ -206,16 +210,12 @@ export default function App() {
               <div className="max-w-xl"><p className="text-[#1A1A1A]/50 text-2xl font-light leading-relaxed border-l-2 border-[#C8A24A]/40 pl-12 italic">Managing six different specialists on your own is exhausting and slows down your success. The traditional system is broken.</p></div>
             </div>
             <div className="grid md:grid-cols-3 gap-12">
-              {[
-                { t: "TOO MANY MEETINGS", d: "Time is lost coordinating disparate calendars instead of executing your wealth strategy." },
-                { t: "NO COMMUNICATION", d: "Experts working in silos create gaps in your protection and tax architecture." },
-                { t: "UNNECESSARY RISK", d: "Fragmented advice leads to structural failures. One master plan eliminates the noise." }
-              ].map((item, idx) => (
+              {["TOO MANY MEETINGS", "NO COMMUNICATION", "UNNECESSARY RISK"].map((t, idx) => (
                 <div key={idx} className="relative p-16 bg-white border border-[#1A1A1A]/5 hover:border-[#C8A24A]/40 transition-all duration-700 group overflow-hidden shadow-sm hover:shadow-2xl">
                   <div className="absolute top-4 left-6 font-serif-display text-[140px] text-[#1A1A1A]/5 italic leading-none pointer-events-none">0{idx+1}</div>
                   <div className="relative z-10 mt-20">
-                    <h3 className="text-[13px] font-black tracking-[0.4em] uppercase mb-10 text-[#1A1A1A]">{item.t}</h3>
-                    <p className="text-base text-[#1A1A1A]/40 leading-relaxed font-light">{item.d}</p>
+                    <h3 className="text-[13px] font-black tracking-[0.4em] uppercase mb-10 text-[#1A1A1A]">{t}</h3>
+                    <p className="text-base text-[#1A1A1A]/40 leading-relaxed font-light">Disconnected advice leads to structural failures. One plan eliminates the noise.</p>
                   </div>
                   <div className="absolute bottom-0 left-0 w-0 h-1 bg-[#C8A24A] group-hover:w-full transition-all duration-700" />
                 </div>
@@ -224,34 +224,54 @@ export default function App() {
           </div>
         </section>
 
-        {/* 4. THE BRIDGE / TRANSFORMATION */}
-        <section id="transformation" className="min-h-[180vh] py-32 lg:py-56 bg-white border-y border-[#1A1A1A]/5 relative overflow-hidden flex flex-col justify-center arch-texture">
+        {/* 4. THE LIVE BRIDGE (NETWORK VISUAL) */}
+        <section id="transformation" className="min-h-[180vh] py-32 lg:py-56 bg-white relative overflow-hidden flex flex-col justify-center arch-texture">
           <img src="transformation-bg.png" alt="" className="absolute inset-0 w-full h-full object-cover opacity-[0.04] pointer-events-none" />
-          <div className="container mx-auto max-w-7xl px-6 lg:px-12 relative z-10">
+          <div className="container mx-auto max-w-7xl px-6 lg:px-12 relative z-10 text-ink">
             <div className="text-center mb-40 reveal">
-               <span className="text-[11px] tracking-[1em] uppercase text-[#C8A24A] font-black mb-12 block uppercase">THE TRANSFORMATION</span>
+               <span className="text-[11px] tracking-[1em] uppercase text-[#C8A24A] font-black mb-12 block">THE TRANSFORMATION</span>
                <h2 className="font-serif-display text-8xl md:text-9xl lg:text-[140px] leading-[0.8] tracking-tighter text-[#1A1A1A] uppercase">One Source.<br /><span className="text-[#C8A24A] italic font-light lowercase leading-none">The Bridge.</span></h2>
             </div>
             <div className="grid lg:grid-cols-12 gap-20 items-start">
               <div className="lg:col-span-7 bg-[#F5F5F5] border-2 border-[#1A1A1A]/5 p-8 md:p-24 shadow-2xl relative flex items-center justify-center h-[600px] md:h-[900px]">
-                <svg width="700" height="700" viewBox="0 0 700 700" className="w-full h-full">
+                <svg width="700" height="700" viewBox="0 0 700 700" className="w-full h-full relative z-10">
+                  {/* Energy Paths (Hidden, used for pulse tracking) */}
+                  <defs>
+                    {engines.map((e, i) => {
+                        const angle = (i * 60 - 90) * (Math.PI / 180);
+                        const x2 = 350 + Math.cos(angle) * 260;
+                        const y2 = 350 + Math.sin(angle) * 260;
+                        return <path key={`path-${i}`} id={`pulse-path-${i}`} d={`M 350 350 L ${x2} ${y2}`} />;
+                    })}
+                  </defs>
+
+                  {/* Connecting Lines */}
                   {engines.map((e, i) => {
                     const angle = (i * 60 - 90) * (Math.PI / 180);
                     const x = 350 + Math.cos(angle) * 260;
                     const y = 350 + Math.sin(angle) * 260;
                     return (
                       <g key={i}>
-                        <line x1="350" y1="350" x2={x} y2={y} stroke="#C8A24A" strokeWidth="1" strokeDasharray="6 12" opacity="0.3" />
-                        <motion.circle whileHover={{ scale: 1.1 }} cx={x} cy={y} r="52" fill="white" stroke="#C8A24A" strokeWidth="1" className="shadow-2xl cursor-pointer" />
-                        <text x={x} y={y + 5} textAnchor="middle" fill="#1A1A1A" fontSize="9" fontWeight="bold" className="pointer-events-none">{e.label}</text>
+                        <line x1="350" y1="350" x2={x} y2={y} stroke="#C8A24A" strokeWidth="1.5" strokeDasharray="8 8" opacity="0.25" />
+                        
+                        {/* Moving Energy Dot (LIVE PULSE) */}
+                        <circle r="4" fill="#C8A24A" className="energy-dot shadow-lg" style={{ offsetPath: `path('M 350 350 L ${x} ${y}')`, animationDelay: `${i * 0.5}s` }} />
+
+                        <motion.circle whileHover={{ scale: 1.1 }} cx={x} cy={y} r="55" fill="white" stroke="#C8A24A" strokeWidth="1" className="shadow-2xl cursor-pointer" />
+                        <text x={x} y={y + 5} textAnchor="middle" fill="#1A1A1A" fontSize="9" fontWeight="bold" className="pointer-events-none uppercase tracking-tighter">{e.label}</text>
                       </g>
                     );
                   })}
-                  <circle cx="350" cy="350" r="65" fill="#1A1A1A" className="gold-glow" />
-                  <text x="350" y="358" textAnchor="middle" fill="#C8A24A" fontSize="14" fontWeight="900" letterSpacing="4">YOU</text>
+
+                  {/* CENTER PIECE: Transparent background with logo.gif (sized half of main logo: 90px) */}
+                  <foreignObject x="305" y="305" width="90" height="90">
+                    <div className="w-full h-full flex items-center justify-center bg-transparent rounded-full overflow-hidden">
+                        <img src="logo.gif" alt="Core" className="w-full h-full object-contain" />
+                    </div>
+                  </foreignObject>
                 </svg>
               </div>
-              <div className="lg:col-span-5 flex flex-col gap-8 pt-10">
+              <div className="lg:col-span-5 flex flex-col gap-8 pt-10 text-ink">
                 {engines.map((e, i) => (
                   <div key={i} className="p-12 border border-[#1A1A1A]/5 bg-white transition-all hover:border-[#C8A24A] hover:translate-x-6 shadow-sm group">
                     <h3 className="font-serif-display text-5xl mb-6 uppercase group-hover:text-[#1A1A1A] leading-none">{e.title}</h3>
@@ -263,7 +283,31 @@ export default function App() {
           </div>
         </section>
 
-        {/* 5. STEADY PARALLAX WINDOW 2 */}
+        {/* 5. METHODOLOGY */}
+        <section id="methodology" className="py-24 lg:py-56 bg-[#F5F5F5] border-b border-[#1A1A1A]/5 relative z-10 shadow-2xl">
+          <div className="container mx-auto max-w-7xl px-6 lg:px-12">
+            <div className="mb-24 lg:mb-40 reveal">
+               <span className="text-[11px] tracking-[0.6em] uppercase text-[#C8A24A] font-black mb-8 block uppercase">OUR METHODOLOGY</span>
+               <h2 className="font-serif-display text-7xl md:text-8xl lg:text-[130px] leading-[0.8] tracking-tighter mb-10 text-[#1A1A1A]">Architecting Growth.</h2>
+               <p className="text-[#1A1A1A]/50 text-2xl font-light leading-relaxed max-w-3xl">A meticulous 3-step process to total clarity and absolute speed.</p>
+            </div>
+            <div className="grid md:grid-cols-3 gap-16 lg:gap-24 text-ink">
+              {[
+                { id: "01", t: "STRATEGIC CONSULT", d: "We map out your exact goals and identify the missing links in your current financial structure." },
+                { id: "02", t: "UNIFIED BLUEPRINT", d: "Our experts across all six engines sync together to create one powerful, unified growth plan." },
+                { id: "03", t: "EXECUTION", d: "We handle the meetings and paperwork in the background, delivering only the finalized results to you." }
+              ].map((step, i) => (
+                <div key={i} className="reveal group" style={{ transitionDelay: `${i * 200}ms` }}>
+                   <div className="text-[14px] font-black tracking-[0.3em] text-[#C8A24A] mb-10 block transition-transform group-hover:translate-x-3 duration-700">0{step.id}</div>
+                   <h3 className="text-[16px] font-black tracking-[0.4em] uppercase mb-10 text-[#1A1A1A] group-hover:text-[#C8A24A] transition-colors duration-700">{step.t}</h3>
+                   <p className="text-sm text-[#1A1A1A]/50 leading-relaxed font-light max-w-xs">{step.d}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 6. STEADY PARALLAX WINDOW 2 */}
         <section className="parallax-window">
            <div className="parallax-fixed-content">
               <img src="parallax-2.png" className="parallax-image" alt="" />
@@ -277,8 +321,8 @@ export default function App() {
            </div>
         </section>
 
-        {/* 6. THE SYSTEM (LIFESTYLE) */}
-        <section id="system" className="min-h-[150vh] py-32 lg:py-[20vh] bg-white relative overflow-hidden flex flex-col justify-center z-10 shadow-2xl">
+        {/* 7. THE SYSTEM (LIFESTYLE VISUALS) */}
+        <section id="system" className="min-h-[150vh] py-32 lg:py-72 bg-white relative overflow-hidden flex flex-col justify-center z-10 shadow-2xl">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12 relative z-10 text-ink text-center max-w-4xl mx-auto mb-32">
             <span className="text-[11px] tracking-[1em] uppercase text-[#C8A24A] font-black mb-8 block uppercase">THE SYSTEM</span>
             <h2 className="font-serif-display text-7xl md:text-9xl lg:text-[120px] leading-[0.8] tracking-tighter mb-10 text-[#1A1A1A]">How We Operate.</h2>
@@ -305,17 +349,36 @@ export default function App() {
           </div>
         </section>
 
-        {/* 7. ECOSYSTEM (BENTO GRID CAPABILITIES) */}
-        <section id="ecosystem" className="py-32 lg:py-72 bg-[#F5F5F5] relative overflow-hidden z-10 shadow-2xl">
+        {/* 8. IMPACT STATS */}
+        <section className="py-44 bg-[#1A1A1A] relative overflow-hidden text-center border-b border-white/5">
+          <div className="container mx-auto max-w-7xl px-6 lg:px-12 relative z-10">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16 max-w-6xl mx-auto">
+              {[
+                { v: 150, s: "+", l: "FAMILIES SERVED", i: Heart },
+                { v: 6, s: "", l: "SPECIALIZED ENGINES", i: Zap },
+                { v: 1, s: "", l: "SINGLE CONTACT", i: UserCheck }
+              ].map((s, i) => (
+                <div key={i} className="text-center p-12 md:p-16 border border-white/10 bg-white/5 backdrop-blur-md rounded-none hover:border-[#C8A24A]/40 transition-all duration-700 group shadow-xl">
+                  <div className="flex justify-center mb-10"><s.i size={56} className="text-[#C8A24A]/40 group-hover:text-[#C8A24A] transition-colors duration-500" /></div>
+                  <div className="font-serif-display text-8xl lg:text-[130px] text-[#C8A24A] mb-6 leading-none"><Counter end={s.v} suffix={s.s} /></div>
+                  <p className="text-[12px] tracking-[0.5em] uppercase font-black text-white/30 group-hover:text-white/60 transition-colors duration-500">{s.l}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* 9. THE ECOSYSTEM (BENTO GRID) */}
+        <section id="ecosystem" className="py-32 lg:py-72 bg-white relative overflow-hidden z-10 shadow-2xl border-y border-black/5">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12 text-center mb-40 reveal">
             <span className="text-[11px] tracking-[1.2em] text-[#C8A24A] font-black block mb-12 uppercase">OUR CAPABILITIES</span>
-            <h2 className="font-serif-display text-7xl md:text-[140px] tracking-tighter uppercase leading-[0.8] text-[#1A1A1A]">The Ecosystem.</h2>
+            <h2 className="font-serif-display text-7xl md:text-[140px] tracking-tighter uppercase leading-[0.8] text-ink">The Ecosystem.</h2>
           </div>
           <div className="container mx-auto max-w-7xl px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 auto-rows-fr">
             {engines.map((engine, i) => (
               <motion.div 
                 key={i} 
-                className={`${engine.span} relative group bg-white border border-[#1A1A1A]/5 p-16 transition-all duration-700 hover:shadow-[0_80px_100px_-30px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col justify-between`}
+                className={`${engine.span} relative group bg-[#F5F5F5] border border-[#1A1A1A]/5 p-16 transition-all duration-700 hover:shadow-[0_80px_100px_-30px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col justify-between`}
               >
                 <div className="relative z-10 flex flex-col h-full justify-between">
                   <div>
@@ -325,7 +388,7 @@ export default function App() {
                     <h3 className="font-serif-display text-6xl mb-6 uppercase tracking-tighter leading-none text-[#1A1A1A]">{engine.label}</h3>
                     <p className="text-[11px] text-[#C8A24A] font-black uppercase tracking-[0.5em] italic mb-10">{engine.title}</p>
                   </div>
-                  <p className="text-[15px] text-[#1A1A1A]/40 font-light leading-relaxed group-hover:text-[#1A1A1A] transition-colors">{engine.desc}</p>
+                  <p className="text-[15px] text-[#1A1A1A]/40 font-light leading-relaxed group-hover:text-ink transition-colors">{engine.desc}</p>
                 </div>
                 <div className="absolute bottom-0 left-0 w-full h-[3px] bg-[#C8A24A] scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-700" />
               </motion.div>
@@ -333,7 +396,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* 8. 3D VAULT (DATA EXCLUSIVITY) */}
+        {/* 10. 3D VAULT (DATA EXCLUSIVITY) */}
         <section className="py-32 lg:py-80 bg-[#1A1A1A] text-white relative overflow-hidden border-y border-white/5">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12 grid lg:grid-cols-2 gap-24 items-center">
             <Reveal x={-40}>
@@ -362,8 +425,8 @@ export default function App() {
           </div>
         </section>
 
-        {/* 9. FOUNDER SECTION (MATCHED TO IMAGE be1465) */}
-        <section id="founder" className="py-28 lg:py-64 bg-[#F5F5F5] border-t border-[#1A1A1A]/5 relative z-10 shadow-2xl text-ink">
+        {/* 11. FOUNDER SECTION */}
+        <section id="founder" className="py-28 lg:py-[30vh] bg-[#F5F5F5] border-t border-[#1A1A1A]/5 relative z-10 shadow-2xl text-ink">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12 grid lg:grid-cols-2 gap-20 lg:gap-48 items-center">
             <Reveal x={-50}>
               <div className="relative w-full max-w-md aspect-[4/5] bg-[#1A1A1A] border border-white/5 p-12 flex flex-col justify-end shadow-3xl group overflow-hidden">
@@ -386,7 +449,7 @@ export default function App() {
                 WITH CONFIDENCE.
               </h2>
               <div className="relative mb-20 pl-16 border-l-2 border-[#C8A24A]/30">
-                <p className="text-3xl md:text-4xl font-serif-display italic text-[#1A1A1A]/70 leading-relaxed font-light">"Bhavin started Square Connect because he believed financial help should be masterfully structured, easy and proactive."</p>
+                <p className="text-3xl md:text-4xl font-serif-display italic text-[#1A1A1A]/70 leading-relaxed font-light">"Bhavin started Square Connect because he believed financial help should be masterful, structure-led, and proactive."</p>
               </div>
               <a href="#contact" className="group inline-flex items-center gap-10 text-[12px] tracking-[1em] uppercase text-[#1A1A1A] font-black border-b-2 border-black/10 pb-8 hover:border-[#C8A24A] transition-all duration-500">
                 LET'S CONNECT <ArrowRight size={24} className="text-[#C8A24A] transition-transform group-hover:translate-x-4" />
@@ -395,8 +458,8 @@ export default function App() {
           </div>
         </section>
 
-        {/* 10. HAPPY CLIENTS (POPUP CARDS) */}
-        <section id="results" className="py-24 lg:py-64 bg-white border-t border-[#1A1A1A]/5 text-ink relative z-10 shadow-2xl">
+        {/* 12. HAPPY CLIENTS (POPUP BUBBLES) */}
+        <section id="results" className="py-24 lg:py-[30vh] bg-white border-t border-[#1A1A1A]/5 text-ink relative z-10 shadow-2xl">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12 text-center mb-40 reveal">
             <span className="text-[11px] tracking-[1.5em] uppercase text-[#C8A24A] font-black mb-12 block uppercase">RESULTS</span>
             <h2 className="font-serif-display text-7xl md:text-[110px] lg:text-[130px] tracking-tighter uppercase font-bold leading-none text-[#1A1A1A]">Happy Clients.</h2>
@@ -406,8 +469,6 @@ export default function App() {
               <motion.div key={i} className="flex flex-col group">
                 <div className="relative p-16 lg:p-20 bg-[#F5F5F5] border border-[#1A1A1A]/5 shadow-xl transition-all duration-700 group-hover:shadow-[0_100px_100px_-40px_rgba(0,0,0,0.1)] group-hover:-translate-y-4">
                   <div className="absolute top-10 right-10 text-[#C8A24A]/10"><Quote size={80} strokeWidth={1} /></div>
-                  
-                  {/* Testimonial - Clean Serif Font */}
                   <p className="font-serif-display text-4xl md:text-5xl text-[#1A1A1A] relative z-10 leading-[1.2] mb-6 italic font-light">
                     "{test.quote}"
                   </p>
@@ -415,6 +476,7 @@ export default function App() {
                 </div>
                 <div className="flex items-center gap-10 mt-20 ml-20">
                   <div className="relative w-28 h-28 rounded-full border-2 border-[#C8A24A]/30 overflow-hidden flex items-center justify-center bg-stone-100 group-hover:border-[#C8A24A] transition-all duration-500 shadow-2xl scale-110">
+                    {/* AUDITED: client-4 is .gif, others are .png */}
                     <img src={`client-${i+1}${i === 3 ? '.gif' : '.png'}`} alt={test.name} className="w-full h-full object-cover" />
                     <UserCheck className="absolute text-[#C8A24A] opacity-20" size={56} strokeWidth={1} />
                   </div>
@@ -428,7 +490,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* 11. OUR GUARANTEE (ICON GRID MATCHED TO c81493) */}
+        {/* 13. OUR GUARANTEE */}
         <section id="guarantee" className="py-32 lg:py-72 bg-[#1A1A1A] border-y border-white/5 relative overflow-hidden text-white z-0 shadow-2xl">
           <div className="container mx-auto max-w-7xl px-6 lg:px-12 relative z-10 text-center">
             <Reveal>
@@ -451,12 +513,37 @@ export default function App() {
               </div>
             </div>
             <div className="mt-24 max-w-4xl mx-auto px-6">
-              <p className="text-3xl md:text-4xl font-serif-display italic text-white/30 leading-relaxed font-light">"We align our success directly with yours. Mastery-level architecture designed to protect and multiply your assets."</p>
+              <p className="text-3xl md:text-4xl font-serif-display italic text-white/30 leading-relaxed font-light">"We align our success directly with yours. Mastery-level architecture designed to protect and multiply your life's assets."</p>
             </div>
           </div>
         </section>
 
-        {/* 12. FINAL STEP (THE LIGHT CURTAIN REVEALER) */}
+        {/* 14. FAQ */}
+        <section id="faq" className="py-24 lg:py-56 bg-[#1A1A1A] border-t border-white/5 text-white">
+          <div className="container mx-auto max-w-4xl px-6 text-center mb-32">
+            <span className="text-[11px] tracking-[1.5em] uppercase text-[#C8A24A] font-black mb-10 block uppercase">CLARITY</span>
+            <h2 className="font-serif-display text-7xl lg:text-[130px] tracking-tighter uppercase text-white/95 leading-none">Questions.</h2>
+          </div>
+          <div className="container mx-auto max-w-4xl px-6 space-y-4">
+            {faqs.map((faq, i) => (
+              <div key={i} className={`border border-white/10 transition-all duration-700 ${openFaq === i ? 'bg-white/5 border-[#C8A24A]/40' : 'bg-transparent'}`}>
+                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full p-12 flex justify-between items-center text-left hover:bg-white/5 transition-all">
+                  <h4 className="text-base md:text-lg font-black uppercase tracking-[0.3em] pr-6">{faq.q}</h4>
+                  <Plus className={`text-[#C8A24A] transition-transform duration-500 ${openFaq === i ? 'rotate-45 scale-125' : ''}`} size={28} />
+                </button>
+                <AnimatePresence>
+                  {openFaq === i && (
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
+                      <p className="px-12 pb-12 text-lg text-white/40 leading-relaxed font-light italic border-l-2 border-[#C8A24A]/20 ml-12">{faq.a}</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 15. FINAL STEP (THE LIGHT CURTAIN REVEALER) */}
         <section id="contact" className="py-32 lg:py-[35vh] bg-[#F5F5F5] text-center border-b border-[#1A1A1A]/10 shadow-[0_100px_200px_rgba(0,0,0,0.6)] relative overflow-hidden">
           <div className="absolute inset-0 opacity-20 hero-grid" />
           <div className="container mx-auto max-w-6xl px-6 relative z-10">
@@ -474,7 +561,7 @@ export default function App() {
         </section>
       </div>
 
-      {/* 13. FOOTER (STEADY BASE REVEALED AS CURTAIN ABOVE LIFTS) */}
+      {/* 16. FOOTER (STEADY BASE REVEALED AS CURTAIN ABOVE LIFTS) */}
       <footer className="sticky-footer py-32 bg-[#1A1A1A] text-white">
         <div className="container mx-auto max-w-7xl px-6 lg:px-12 grid md:grid-cols-4 gap-24 text-white/90 relative z-10">
           <div className="col-span-1">
